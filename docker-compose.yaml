@@ -10,7 +10,7 @@ services:
             - ./docker/containers/nginx/nginx.conf:/etc/nginx/nginx.conf
             - ./application:/var/www/html
         depends_on:
-            bff:
+            report:
                 condition: service_healthy
                 restart: true
 
