@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'trigger_service' => [
+        'base_url' => env('TRIGGER_SERVICE_BASE_URL', 'http://trigger-service'),
+        'timeout'  => env('TRIGGER_SERVICE_TIMEOUT', 10),
+    ],
+
 ];

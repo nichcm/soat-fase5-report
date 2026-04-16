@@ -11,12 +11,12 @@ Route::get("ping", function () {
 });
 
 Route::get("/status/{protocol_uuid}", [
-    \App\Http\Controllers\ReportServiceConnectionController::class,
+    \App\Http\Controllers\ReportConnectionController::class,
     "getReportStatus",
 ]);
 
 Route::get("/report/{protocol_uuid}", [
-    \App\Http\Controllers\ReportServiceConnectionController::class,
+    \App\Http\Controllers\ReportConnectionController::class,
     "getReport",
 ]);
 
