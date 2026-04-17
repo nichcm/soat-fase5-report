@@ -24,5 +24,5 @@ Route::fallback(
     fn() => response()->json([
         "err" => true,
         "msg" => "Recurso não encontrado",
-    ]),
+    ], 404),
 );

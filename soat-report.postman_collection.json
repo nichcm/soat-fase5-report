@@ -1,0 +1,157 @@
+{
+  "info": {
+    "name": "soat-fase5-report",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "protocol_uuid",
+      "value": "00000000-0000-0000-0000-000000000001",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/ping",
+          "host": ["{{base_url}}"],
+          "path": ["api", "ping"]
+        }
+      },
+      "response": [
+        {
+          "name": "200 OK",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": false,\n  \"msg\": \"pong\",\n  \"service\": \"soat-report\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Consultar status da análise",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/status/{{protocol_uuid}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "status", "{{protocol_uuid}}"]
+        }
+      },
+      "response": [
+        {
+          "name": "200 OK — completed",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": false,\n  \"protocolUuid\": \"{{protocol_uuid}}\",\n  \"status\": \"completed\"\n}"
+        },
+        {
+          "name": "200 OK — pending",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": false,\n  \"protocolUuid\": \"{{protocol_uuid}}\",\n  \"status\": \"pending\"\n}"
+        },
+        {
+          "name": "200 OK — running",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": false,\n  \"protocolUuid\": \"{{protocol_uuid}}\",\n  \"status\": \"running\"\n}"
+        },
+        {
+          "name": "200 OK — failed",
+          "status": "OK",
+          "code": 200,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": false,\n  \"protocolUuid\": \"{{protocol_uuid}}\",\n  \"status\": \"failed\"\n}"
+        },
+        {
+          "name": "502 Bad Gateway — gateway indisponível",
+          "status": "Bad Gateway",
+          "code": 502,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": true,\n  \"msg\": \"Service unavailable\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Gerar relatório (PDF)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/report/{{protocol_uuid}}",
+          "host": ["{{base_url}}"],
+          "path": ["api", "report", "{{protocol_uuid}}"]
+        }
+      },
+      "response": [
+        {
+          "name": "200 OK — PDF",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            { "key": "Content-Type", "value": "application/pdf" },
+            { "key": "Content-Disposition", "value": "attachment; filename=\"report-{{protocol_uuid}}.pdf\"" }
+          ],
+          "body": "<binary PDF content>"
+        },
+        {
+          "name": "502 Bad Gateway — gateway indisponível",
+          "status": "Bad Gateway",
+          "code": 502,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": true,\n  \"msg\": \"Gateway error\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Gerar relatório (formato explícito via query param)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/report/{{protocol_uuid}}?format=pdf",
+          "host": ["{{base_url}}"],
+          "path": ["api", "report", "{{protocol_uuid}}"],
+          "query": [
+            {
+              "key": "format",
+              "value": "pdf",
+              "description": "Formato do relatório. Valor suportado: pdf. Valores inválidos fazem fallback para pdf."
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Rota inexistente (fallback 404)",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{base_url}}/api/rota-inexistente",
+          "host": ["{{base_url}}"],
+          "path": ["api", "rota-inexistente"]
+        }
+      },
+      "response": [
+        {
+          "name": "404 Not Found",
+          "status": "Not Found",
+          "code": 404,
+          "header": [{ "key": "Content-Type", "value": "application/json" }],
+          "body": "{\n  \"err\": true,\n  \"msg\": \"Recurso não encontrado\"\n}"
+        }
+      ]
+    }
+  ]
+}
