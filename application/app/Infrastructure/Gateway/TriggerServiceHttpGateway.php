@@ -43,7 +43,7 @@ class TriggerServiceHttpGateway implements TriggerServiceGatewayInterface
             );
         }
 
-        $value = $response->json('status');
+        $value = $response->json()['data']['status'];
 
         $status = AnalysisStatus::tryFrom($value);
 
