@@ -5,6 +5,7 @@ namespace App\Infrastructure\Gateway;
 use App\Domain\Analysis\AnalysisData;
 use App\Domain\Analysis\AnalysisStatus;
 use App\Domain\Contracts\TriggerServiceGatewayInterface;
+use App\Infrastructure\Observability\OtelContext;
 use Illuminate\Support\Facades\Http;
 use RuntimeException;
 
@@ -17,7 +18,8 @@ class TriggerServiceHttpGateway implements TriggerServiceGatewayInterface
 
     public function fetchData(string $uuid): AnalysisData
     {
-        $response = Http::timeout($this->timeoutSeconds)
+        $response = Http::withHeaders(OtelContext::propagationHeaders())
+            ->timeout($this->timeoutSeconds)
             ->get("{$this->baseUrl}/data/{$uuid}");
 
         if ($response->failed()) {
@@ -34,7 +36,8 @@ class TriggerServiceHttpGateway implements TriggerServiceGatewayInterface
 
     public function fetchStatus(string $uuid): AnalysisStatus
     {
-        $response = Http::timeout($this->timeoutSeconds)
+        $response = Http::withHeaders(OtelContext::propagationHeaders())
+            ->timeout($this->timeoutSeconds)
             ->get("{$this->baseUrl}/status/{$uuid}");
 
         if ($response->failed()) {
