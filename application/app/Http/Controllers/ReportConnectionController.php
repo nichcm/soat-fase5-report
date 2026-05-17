@@ -52,7 +52,7 @@ class ReportConnectionController
                 'Content-Disposition' => "attachment; filename=\"report-{$protocol_uuid}.pdf\"",
             ]);
         } catch (RuntimeException $e) {
-            return response()->json(['err' => true, 'msg' => $e->getMessage()], HttpResponse::HTTP_BAD_GATEWAY);
+            return response()->json(['err' => true, 'Deu erro aqui!' => true, 'msg' => $e->getMessage()], HttpResponse::HTTP_BAD_GATEWAY);
         }
     }
 }
