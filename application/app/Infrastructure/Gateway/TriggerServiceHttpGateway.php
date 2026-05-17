@@ -40,6 +40,8 @@ class TriggerServiceHttpGateway implements TriggerServiceGatewayInterface
             ->timeout($this->timeoutSeconds)
             ->get("{$this->baseUrl}/status/{$uuid}");
 
+        // dd($response);
+
         if ($response->failed()) {
             throw new RuntimeException(
                 "TriggerService fetchStatus failed for uuid={$uuid}: HTTP {$response->status()}"
