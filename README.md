@@ -57,7 +57,7 @@ A aplicação fica disponível em `http://localhost:8000`.
 { "err": false, "protocolUuid": "uuid", "status": "completed" }
 ```
 
-Status possíveis: `pending` | `running` | `completed` | `failed`
+Status possíveis: `RECEBIDO` | `EM_PROCESSAMENTO` | `SUCESSO` | `ERRO`
 
 **Erro (502):** gateway indisponível.
 ```json
@@ -79,17 +79,32 @@ Aceita o query param `?format=pdf` (padrão). Formatos inválidos fazem fallback
 
 ## Testes
 
-Os testes rodam dentro do container com Xdebug para cobertura:
+### Pré-requisitos
+
+- Docker e Docker Compose
+- Container `soat-report` em execução (`docker compose up -d`)
+
+### 1. Instalar dependências (incluindo dev)
 
 ```bash
-docker exec soat-report sh -c "cd /var/www/html && vendor/bin/phpunit"
+docker exec soat-report composer install
 ```
 
-Para gerar o relatório de cobertura em HTML:
+> Necessário apenas na primeira vez ou após alterações no `composer.json`.
+
+### 2. Executar os testes
 
 ```bash
-docker exec soat-report sh -c "cd /var/www/html && vendor/bin/phpunit --coverage-html var/coverage"
+docker exec soat-report vendor/bin/phpunit
 ```
+
+### 3. Executar com relatório de cobertura HTML
+
+```bash
+docker exec soat-report vendor/bin/phpunit --coverage-html var/coverage/html
+```
+
+O relatório estará disponível em `application/var/coverage/html/index.html`.
 
 ### Estrutura dos testes
 

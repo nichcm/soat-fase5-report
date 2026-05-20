@@ -9,18 +9,18 @@ class AnalysisStatusTest extends TestCase
 {
     public function test_enum_values(): void
     {
-        $this->assertSame('pending', AnalysisStatus::Pending->value);
-        $this->assertSame('running', AnalysisStatus::Running->value);
-        $this->assertSame('completed', AnalysisStatus::Completed->value);
-        $this->assertSame('failed', AnalysisStatus::Failed->value);
+        $this->assertSame('RECEBIDO', AnalysisStatus::Pending->value);
+        $this->assertSame('EM_PROCESSAMENTO', AnalysisStatus::Running->value);
+        $this->assertSame('SUCESSO', AnalysisStatus::Completed->value);
+        $this->assertSame('ERRO', AnalysisStatus::Failed->value);
     }
 
     public function test_from_string(): void
     {
-        $this->assertSame(AnalysisStatus::Pending, AnalysisStatus::from('pending'));
-        $this->assertSame(AnalysisStatus::Running, AnalysisStatus::from('running'));
-        $this->assertSame(AnalysisStatus::Completed, AnalysisStatus::from('completed'));
-        $this->assertSame(AnalysisStatus::Failed, AnalysisStatus::from('failed'));
+        $this->assertSame(AnalysisStatus::Pending, AnalysisStatus::from('RECEBIDO'));
+        $this->assertSame(AnalysisStatus::Running, AnalysisStatus::from('EM_PROCESSAMENTO'));
+        $this->assertSame(AnalysisStatus::Completed, AnalysisStatus::from('SUCESSO'));
+        $this->assertSame(AnalysisStatus::Failed, AnalysisStatus::from('ERRO'));
     }
 
     public function test_try_from_returns_null_for_unknown_value(): void
