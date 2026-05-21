@@ -138,3 +138,23 @@ O build falha se a cobertura de linhas cair abaixo de **85%**.
 | `TRIGGER_SERVICE_BASE_URL`      | `http://trigger-service`  | URL base do serviço de trigger   |
 | `TRIGGER_SERVICE_TIMEOUT`       | `10`                      | Timeout em segundos              |
 | `APP_NAME`                      | —                         | Nome exibido no `/api/ping`      |
+
+## Equipe
+
+### Integrantes IADT
+
+| Nome | RM |
+|---|---|
+| Angelo Rossi | RM365902 |
+| Carlos Eduardo | RM365213 |
+| Felipe Goiabeira | RM365753 |
+| Guilherme Groff | RM365281 |
+| Rafael Lua | RM366254 |
+
+### Integrantes SOAT
+
+| Nome | RM |
+|---|---|
+| Felipe Alves de Oliveira | RM365154 |
+| Nicolas Henrique Correa Martins | RM365746 |
+| William Francisco Leite | RM365973 |
