@@ -45,10 +45,10 @@ class ReportConnectionControllerTest extends TestCase
     public static function analysisStatusProvider(): array
     {
         return [
-            'pending'   => [AnalysisStatus::Pending, 'pending'],
-            'running'   => [AnalysisStatus::Running, 'running'],
-            'completed' => [AnalysisStatus::Completed, 'completed'],
-            'failed'    => [AnalysisStatus::Failed, 'failed'],
+            'pending'   => [AnalysisStatus::Pending, 'RECEBIDO'],
+            'running'   => [AnalysisStatus::Running, 'EM_PROCESSAMENTO'],
+            'completed' => [AnalysisStatus::Completed, 'SUCESSO'],
+            'failed'    => [AnalysisStatus::Failed, 'ERRO'],
         ];
     }
 

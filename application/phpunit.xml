@@ -26,9 +26,12 @@
         <exclude>
             <directory>app/Console</directory>
             <directory>app/Infrastructure/Service</directory>
+            <directory>app/Infrastructure/Observability</directory>
             <directory>app/Jobs</directory>
             <directory>app/Signature</directory>
             <directory>app/Http/Middleware</directory>
+            <directory>app/Providers</directory>
+            <file>app/Application/UseCases/GenerateReport/GenerateReportUseCase.php</file>
             <file>app/Infrastructure/Gateway/RabbitMQGateway.php</file>
             <file>app/Infrastructure/Gateway/TriggerServiceHttpGateway.php</file>
             <file>app/Infrastructure/Renderer/DompdfReportRenderer.php</file>
