@@ -64,6 +64,46 @@ A única dependência externa é o **Trigger Service**, acessado via HTTP. Em te
 
 ---
 
+## Segurança
+
+### Requisitos básicos adotados
+
+- **Credenciais via variáveis de ambiente**: URL e timeout do trigger-service são injetados via `.env`, sem valores hardcoded
+- **Rede Docker isolada** (`soat-net`): este serviço não é acessível externamente — somente o BFF se comunica com ele
+
+### Validação e tratamento de entradas não confiáveis
+
+- `protocol_uuid` validado como UUID válido antes de qualquer chamada ao trigger-service
+- Parâmetro `?format` tratado com fallback seguro para `pdf` quando o valor informado é inválido
+- Respostas do trigger-service são validadas antes de renderizar o PDF — campos ausentes ou malformados não causam erro não tratado
+
+### Uso controlado do modelo de IA
+
+- Este serviço não se comunica com a IA diretamente — consome apenas dados **já processados e persistidos** pelo trigger-service
+- O schema dos dados recebidos (`components`, `risks`, `recommendations`) é esperado e validado antes da renderização do PDF
+- O conteúdo do relatório reflete exclusivamente o que a IA retornou; nenhuma inferência adicional é feita aqui
+
+### Tratamento de falhas e comportamentos inesperados da IA
+
+- Quando a IA retornou erro (`status: ERRO`), o trigger-service expõe esse status e este serviço o repassa ao cliente sem tentar gerar um relatório inválido
+- Timeout configurável (`TRIGGER_SERVICE_TIMEOUT`) evita que indisponibilidade do trigger-service bloqueie indefinidamente a geração do PDF
+- Erros `502` são retornados ao cliente quando o trigger-service está indisponível, sem expor detalhes internos
+
+### Comunicação entre serviços
+
+- **Rede Docker interna** (`soat-net`): comunicação com o trigger-service trafega apenas na rede interna
+- Timeout HTTP configurável para chamadas ao trigger-service
+- Dependência única e bem definida (apenas o trigger-service), reduzindo a superfície de ataque
+
+### Riscos e limitações conhecidos
+
+| Risco | Impacto | Mitigação atual |
+|---|---|---|
+| Indisponibilidade do trigger-service bloqueia geração do PDF | Cliente recebe erro enquanto o serviço upstream estiver fora | Timeout configurável (`TRIGGER_SERVICE_TIMEOUT`); retorna `502` com mensagem clara |
+| Dados da análise com schema inesperado podem causar falha na renderização | PDF gerado incompleto ou com erro | Schema de entrada validado antes de renderizar; fallback tratado pela camada de Application |
+
+---
+
 ## Pré-requisitos
 
 - Docker e Docker Compose
