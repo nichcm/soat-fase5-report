@@ -2,6 +2,14 @@
 
 Microsserviço responsável por gerar e entregar relatórios de análise em PDF. Recebe um `protocol_uuid`, consulta o serviço externo de trigger para obter os dados da análise e renderiza o relatório com DomPDF.
 
+
+## Alunos
+
+| Aluno | RM | Discord | LinkedIn |
+|---|---|---|---|
+| Felipe | 365154 | felipeoli7eira | [@felipeoli7eira](https://www.linkedin.com/in/felipeoli7eira) |
+| Nicolas | 365746 | nic_hcm | [@Nicolas Martins](https://www.linkedin.com/in/nicolas-hcm) |
+| William | 365973 | wllsistemas | [@William Francisco Leite](https://www.linkedin.com/in/williamfranciscoleite) |
 ---
 
 ## Arquitetura
